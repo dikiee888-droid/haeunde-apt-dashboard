@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="부산 해운대구 아파트 실거래가와 입지를 한눈에 보는 인터랙티브 대시보드" />
+  <title>해운대 집값 나침반</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./refinements.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <header class="topbar">
+    <div class="brand-cluster">
+      <a class="brand" href="#top" aria-label="홈으로">
+        <span class="brand-mark"><i></i><i></i><i></i></span>
+        <span>해운대 집값 나침반</span>
+      </a>
+      <a class="broker-contact" href="tel:051-747-7877" aria-label="넥스트센텀부동산, 해운대구 센텀 2로 24 103-1호, 전화 051-747-7877">
+        <span>넥스트센텀부동산</span>
+        <strong>051-747-7877</strong>
+        <small>해운대구 센텀 2로 24, 103-1호</small>
+      </a>
+    </div>
+    <form class="global-filter" id="globalFilter" aria-label="지역 및 기준 날짜 선택">
+      <label class="filter-field">
+        <span>지역</span>
+        <select id="guSelect" aria-label="구 선택">
+          <option value="해운대구">해운대구</option>
+        </select>
+      </label>
+      <span class="filter-divider">›</span>
+      <label class="filter-field dong-field">
+        <span>동</span>
+        <select id="dongSelect" aria-label="동 선택">
+          <option value="전체">전체</option>
+          <option value="우동">우동</option>
+          <option value="중동">중동</option>
+          <option value="좌동">좌동</option>
+          <option value="송정동">송정동</option>
+          <option value="재송동">재송동</option>
+          <option value="반여동">반여동</option>
+          <option value="반송동">반송동</option>
+          <option value="석대동">석대동</option>
+        </select>
+      </label>
+      <label class="filter-field date-field">
+        <span>기준 날짜</span>
+        <input id="dateSelect" type="date" min="2025-01-01" max="2026-10-22" value="2026-10-22" aria-label="기준 날짜" />
+      </label>
+      <button class="apply-filter" type="submit">조회</button>
+    </form>
+    <nav aria-label="주요 메뉴">
+      <a class="active" href="#overview">시장 흐름</a>
+      <a href="#rankings">거래 랭킹</a>
+      <a href="#location">입지 분석</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button" id="refreshBtn" aria-label="데이터 새로고침" title="데이터 새로고침">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8.1 8.1 0 0 0-14.7-4M4 4v5h5M4 13a8.1 8.1 0 0 0 14.7 4M20 20v-5h-5"/></svg>
+      </button>
+      <div class="updated"><span>조회 기준</span><strong id="headerDate">2026.10.22</strong></div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" id="overview">
+      <div class="hero-copy">
+        <div class="eyebrow"><span></span> HAEUNDAE MARKET PULSE</div>
+        <h1>숫자 너머의 흐름까지,<br><em>해운대 집값을 읽다</em></h1>
+        <p>실거래가·평당가격·생활 인프라를 한 화면에서 비교하세요.<br>해운대구의 오늘을 읽고, 다음 선택의 근거를 만듭니다.</p>
+        <div class="hero-meta">
+          <span class="status-dot"></span>
+          <b>분석 기준</b> <span id="analysisBasis">해운대구 전체 · 2026년 10월 22일 · 최근 12개월</span>
+          <span class="sample-badge">DEMO DATA</span>
+        </div>
+      </div>
+      <div class="hero-stats" aria-label="핵심 시장 지표">
+        <article class="stat-card primary">
+          <div class="stat-icon">₩</div>
+          <span>평균 매매가</span>
+          <strong id="avgSalePrice">8억 4,250만</strong>
+          <small class="up" id="avgSaleTrend">↗ 2.8% <i>전년 대비</i></small>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon">평</div>
+          <span>평균 평당가</span>
+          <strong id="avgPyeongPrice">3,184만</strong>
+          <small class="up" id="avgPyeongTrend">↗ 1.6% <i>전년 대비</i></small>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon">件</div>
+          <span>최근 거래량</span>
+          <strong id="recentVolume">1,284건</strong>
+          <small class="down" id="volumeTrend">↘ 4.2% <i>전월 대비</i></small>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="section-heading">
+        <div><span class="section-no">01</span><h2>실거래가 가격지수</h2></div>
+        <p>최근 12개월 가격 흐름을 거래 유형별로 비교합니다.</p>
+      </div>
+      <article class="panel chart-panel">
+        <div class="panel-toolbar">
+          <div class="segmented" data-group="index">
+            <button class="active" data-type="sale">매매</button>
+            <button data-type="jeonse">전세</button>
+            <button data-type="monthly">월세</button>
+          </div>
+          <div class="legend"><span class="legend-line"></span><b id="indexLegend">매매 가격지수</b><span class="legend-bar"></span>월간 변동률</div>
+          <button class="ghost-button" id="downloadBtn">CSV 내보내기 <span>↓</span></button>
+        </div>
+        <div class="index-summary">
+          <div><span>현재 지수</span><strong id="currentIndex">108.4</strong><small>2025.10 = 100</small></div>
+          <div><span>월간 변동</span><strong class="coral" id="monthlyChange">+0.62%</strong><small>전월 대비</small></div>
+          <div><span>연간 변동</span><strong id="annualChange">+4.18%</strong><small>전년 대비</small></div>
+        </div>
+        <div class="chart-wrap">
+          <div class="y-axis"><span>110</span><span>106</span><span>102</span><span>98</span></div>
+          <svg id="indexChart" viewBox="0 0 1000 300" preserveAspectRatio="none" role="img" aria-label="아파트 실거래가 가격지수 차트">
+            <defs>
+              <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6b57" stop-opacity=".24"/><stop offset="1" stop-color="#ff6b57" stop-opacity=".01"/></linearGradient>
+            </defs>
+            <g class="grid-lines"><line x1="0" y1="25" x2="1000" y2="25"/><line x1="0" y1="105" x2="1000" y2="105"/><line x1="0" y1="185" x2="1000" y2="185"/><line x1="0" y1="265" x2="1000" y2="265"/></g>
+            <g id="barGroup"></g>
+            <path id="areaPath" fill="url(#areaGradient)"></path>
+            <path id="linePath" class="index-line"></path>
+            <g id="pointGroup"></g>
+          </svg>
+          <div class="x-axis"><span>2025.11</span><span>2026.01</span><span>03</span><span>05</span><span>07</span><span>09</span><span>10</span></div>
+          <div class="chart-tooltip" id="chartTooltip"></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section-block" id="rankings">
+      <div class="section-heading">
+        <div><span class="section-no">02</span><h2>거래 랭킹</h2></div>
+        <p>해운대구에서 가장 주목받은 거래와 평당가격을 확인하세요.</p>
+      </div>
+      <div class="ranking-grid">
+        <article class="panel ranking-panel">
+          <div class="panel-title-row"><div><span>TRANSACTION VALUE</span><h3>실거래가 TOP 10</h3></div><div class="segmented compact" data-group="trade"><button class="active" data-type="sale">매매</button><button data-type="jeonse">전세</button><button data-type="monthly">월세</button></div></div>
+          <div class="table-head"><span>순위 / 단지</span><span>면적</span><span>거래금액</span></div>
+          <div id="tradeRanking" class="ranking-list"></div>
+          <button class="more-button" data-target="tradeRanking">10위까지 전체보기 <span>↘</span></button>
+        </article>
+        <article class="panel ranking-panel dark-panel">
+          <div class="panel-title-row"><div><span>PRICE PER PYEONG</span><h3>평당가격 TOP 10</h3></div><div class="segmented compact dark" data-group="pyeong"><button class="active" data-type="sale">매매</button><button data-type="jeonse">전세</button><button data-type="monthly">월세</button></div></div>
+          <div class="table-head"><span>순위 / 단지</span><span>전용</span><span>평당가격</span></div>
+          <div id="pyeongRanking" class="ranking-list"></div>
+          <button class="more-button light" data-target="pyeongRanking">10위까지 전체보기 <span>↘</span></button>
+        </article>
+      </div>
+      <article class="panel ranking-map-panel" aria-label="아파트 단지 위치 지도">
+        <div class="ranking-map-info">
+          <span class="map-eyebrow">APARTMENT LOCATION</span>
+          <h3>아파트 단지 위치</h3>
+          <p>랭킹의 아파트를 클릭하면 지도에서 위치를 확인할 수 있습니다.</p>
+          <div class="selected-apt-card" id="selectedAptCard" role="button" tabindex="0" aria-label="선택 단지 입지 분석 열기">
+            <span id="selectedAptRank">RANK 01</span>
+            <strong id="selectedAptName">엘시티 더샵</strong>
+            <small id="selectedAptMeta">중동 · 해운대해변로 30</small>
+            <b id="selectedAptValue">85.2억</b>
+          </div>
+          <div class="map-tip"><i></i> 랭킹의 아파트를 선택하면 Google 지도가 이동합니다</div>
+        </div>
+        <div class="ranking-map-canvas">
+          <div class="ranking-map-label"><span class="pulse"></span><b id="rankingMapLabel">해운대구 전체</b></div>
+          <iframe id="rankingGoogleMap" title="선택 아파트 Google 지도" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" src="https://www.google.com/maps?q=%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C%20%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC%20%ED%95%B4%EC%9A%B4%EB%8C%80%ED%95%B4%EB%B3%80%EB%A1%9C%2030%20%EC%97%98%EC%8B%9C%ED%8B%B0%20%EB%8D%94%EC%83%B5&amp;z=16&amp;output=embed"></iframe>
+          <div class="google-map-credit">Google 지도</div>
+          <a class="google-map-open" id="rankingMapOpen" href="https://www.google.com/maps/search/?api=1&amp;query=%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C%20%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC%20%ED%95%B4%EC%9A%B4%EB%8C%80%ED%95%B4%EB%B3%80%EB%A1%9C%2030%20%EC%97%98%EC%8B%9C%ED%8B%B0%20%EB%8D%94%EC%83%B5" target="_blank" rel="noopener noreferrer">Google 지도에서 크게 보기 ↗</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="section-block pulse-section" id="pulse">
+      <div class="section-heading">
+        <div><span class="section-no">03</span><h2>시장 체온</h2></div>
+        <p>거래량·수급 심리·인구 흐름으로 시장의 온도를 읽습니다.</p>
+      </div>
+      <div class="pulse-grid">
+        <article class="panel volume-panel">
+          <div class="micro-title"><span>MONTHLY VOLUME</span><h3>월간 거래량</h3><b>최근 10개월</b></div>
+          <div class="volume-chart" aria-label="월간 아파트 거래량 막대 차트">
+            <div class="volume-bars">
+              <i style="--h:47%"><em>772</em></i><i style="--h:63%"><em>1,041</em></i><i style="--h:55%"><em>918</em></i><i style="--h:71%"><em>1,182</em></i><i style="--h:68%"><em>1,126</em></i><i style="--h:82%"><em>1,364</em></i><i style="--h:76%"><em>1,251</em></i><i style="--h:88%"><em>1,458</em></i><i style="--h:79%"><em>1,304</em></i><i class="current" style="--h:74%"><em>1,284</em></i>
+            </div>
+            <div class="volume-axis"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span><span>09</span><span>10월</span></div>
+          </div>
+          <div class="volume-foot"><span><i></i> 아파트 실거래 신고 건수</span><strong>전월 대비 <b>−1.5%</b></strong></div>
+        </article>
+        <article class="panel sentiment-panel">
+          <div class="micro-title"><span>MARKET SENTIMENT</span><h3>매수·매도 시장동향</h3><b>100 기준</b></div>
+          <div class="sentiment-content">
+            <div class="donut" style="--value:57"><div><strong>57.4</strong><span>매수우위지수</span></div></div>
+            <div class="sentiment-copy"><strong>매도 우위</strong><p>매도 문의가 매수 문의보다 많은 관망 구간입니다.</p><div><span><i class="sell"></i>매도 많음 52%</span><span><i class="same"></i>비슷함 38%</span><span><i class="buy"></i>매수 많음 10%</span></div></div>
+          </div>
+        </article>
+        <article class="panel population-panel">
+          <div class="micro-title"><span>POPULATION</span><h3>인구 흐름</h3><b>해운대구</b></div>
+          <div class="population-value"><strong>375,842</strong><span>명</span><small>전년 대비 <b>−0.7%</b></small></div>
+          <div class="sparkline"><svg viewBox="0 0 360 92" preserveAspectRatio="none"><defs><linearGradient id="popFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6b57" stop-opacity=".25"/><stop offset="1" stop-color="#ff6b57" stop-opacity="0"/></linearGradient></defs><path d="M0 18C35 21 54 31 83 35s55 2 78 13 42 9 63 16 49 2 75 12 38 8 61 10L360 92H0Z" fill="url(#popFade)"/><path d="M0 18C35 21 54 31 83 35s55 2 78 13 42 9 63 16 49 2 75 12 38 8 61 10" fill="none" stroke="#ff6b57" stroke-width="2.4"/></svg></div>
+          <div class="population-foot"><span>가구 수 <b>171,206</b></span><span>1인 가구 <b>34.8%</b></span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-block location-section" id="location">
+      <div class="section-heading light-heading">
+        <div><span class="section-no">04</span><h2>입지 분석</h2></div>
+        <p>생활의 가치를 만드는 핵심 인프라를 클릭해 확인하세요.</p>
+      </div>
+      <div class="location-tabs" role="tablist" aria-label="입지 분석 항목">
+        <button class="active" data-location="school"><span>學</span><b>학군</b><small>교육 환경</small></button>
+        <button data-location="traffic"><span>道</span><b>교통</b><small>도로 접근성</small></button>
+        <button data-location="subway"><span>驛</span><b>지하철</b><small>역세권 분석</small></button>
+        <button data-location="ktx"><span>K</span><b>KTX</b><small>광역 이동</small></button>
+        <button data-location="gtx"><span>G</span><b>GTX</b><small>계획 노선</small></button>
+      </div>
+      <div class="location-layout">
+        <article class="location-detail">
+          <div class="detail-topline"><span id="locationKicker">EDUCATION</span><span class="score-pill">입지 점수 <b id="locationScore">92</b></span></div>
+          <h3 id="locationTitle">우수한 학군, 흔들리지 않는 주거 가치</h3>
+          <p id="locationDescription">해운대구는 센텀·좌동을 중심으로 명문 학군과 대형 학원가가 밀집해 있습니다. 초·중·고 도보 통학권과 교육 인프라가 주거 선호도를 안정적으로 뒷받침합니다.</p>
+          <div class="metric-grid" id="locationMetrics"></div>
+          <div class="insight-box"><span>ANALYST NOTE</span><p id="locationNote">좌동 신시가지와 센텀권은 학교·학원가 접근성이 함께 높아 자녀 교육 목적의 실수요가 꾸준한 지역입니다.</p></div>
+        </article>
+        <article class="map-card">
+          <div class="map-label"><span class="pulse"></span><b id="mapLabel">교육 인프라 밀집도</b></div>
+          <svg class="map-art" viewBox="0 0 680 460" role="img" aria-label="해운대구 입지 개념도">
+            <path class="coast" d="M40 85C131 48 209 80 274 68c72-14 122-1 163 32 45 37 70 9 135 53 44 30 55 85 21 119-28 28-64 32-83 72-23 49-67 76-119 48-47-26-82 8-145 2-54-5-75-40-119-43-66-4-92-59-68-101 23-40-14-86-19-165z"/>
+            <g class="roads"><path d="M94 110c85 54 159 66 236 147s158 72 237 96"/><path d="M137 321c94-41 169-108 260-161s119-42 172-27"/><path d="M213 80c-4 85 12 169 68 250"/></g>
+            <g id="mapMarkers"></g>
+            <text x="74" y="250">반여동</text><text x="208" y="132">재송동</text><text x="302" y="242">우동</text><text x="431" y="320">중동</text><text x="516" y="216">좌동</text>
+          </svg>
+          <div class="map-legend"><span><i class="hot"></i> 핵심권역</span><span><i class="mid"></i> 영향권</span><span><i class="low"></i> 생활권</span></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="apt-analysis-dialog" id="aptAnalysisDialog" aria-labelledby="aptAnalysisName">
+    <div class="apt-analysis-shell">
+      <button class="apt-analysis-close" id="aptAnalysisClose" type="button" aria-label="단지 입지 분석 닫기">×</button>
+      <div class="apt-analysis-heading">
+        <div>
+          <span class="apt-analysis-kicker">APARTMENT LOCATION REPORT</span>
+          <h2 id="aptAnalysisName">엘시티 더샵</h2>
+          <p id="aptAnalysisAddress">중동 · 해운대해변로 30</p>
+        </div>
+        <div class="apt-score" aria-label="종합 입지 점수">
+          <span>종합 입지</span>
+          <strong id="aptAnalysisScore">94</strong>
+          <small>/ 100</small>
+        </div>
+      </div>
+      <div class="apt-analysis-context">
+        <span id="aptAnalysisRank">매매 실거래가 1위</span>
+        <span id="aptAnalysisDate">2026.10.22 기준</span>
+        <span>시연용 추정 데이터</span>
+      </div>
+      <p class="apt-analysis-summary" id="aptAnalysisSummary"></p>
+      <div class="apt-analysis-metrics" id="aptAnalysisMetrics"></div>
+      <div class="apt-analysis-bottom">
+        <section>
+          <span>CORE STRENGTHS</span>
+          <h3>이 단지의 입지 강점</h3>
+          <ul id="aptAnalysisStrengths"></ul>
+        </section>
+        <section class="apt-caution">
+          <span>CHECK POINT</span>
+          <h3>함께 확인할 점</h3>
+          <p id="aptAnalysisCaution"></p>
+        </section>
+      </div>
+    </div>
+  </dialog>
+
+  <footer>
+    <div class="brand footer-brand"><span class="brand-mark"><i></i><i></i><i></i></span><span>해운대 집값 나침반</span></div>
+    <p>본 화면의 수치는 서비스 시연을 위한 예시 데이터이며, 실제 투자 판단의 근거로 사용할 수 없습니다.</p>
+    <span>© 2026 Haeundae Market Compass</span>
+  </footer>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="./app.js"></script>
+</body>
+</html>
+

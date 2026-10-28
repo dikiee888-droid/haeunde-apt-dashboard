@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
-  <link rel="stylesheet" href="./refinements.css?v=20261028c" />
+  <link rel="stylesheet" href="./refinements.css?v=20261028d" />
 </head>
 <body>
   <div class="ambient ambient-one"></div>
@@ -157,7 +157,7 @@
     <section class="section-block" id="rankings">
       <div class="section-heading">
         <div><span class="section-no">02</span><h2>거래 랭킹</h2></div>
-        <p>해운대구에서 가장 주목받은 거래와 평당가격을 확인하세요.</p>
+        <p>주요 거래를 비교하고, 아파트를 클릭해 입지 분석과 Google 지도를 확인하세요.</p>
       </div>
       <div class="ranking-grid">
         <article class="panel ranking-panel">
@@ -173,26 +173,6 @@
           <button class="more-button light" data-target="pyeongRanking">10위까지 전체보기 <span>↘</span></button>
         </article>
       </div>
-      <article class="panel ranking-map-panel" aria-label="아파트 단지 위치 지도">
-        <div class="ranking-map-info">
-          <span class="map-eyebrow">APARTMENT LOCATION</span>
-          <h3>아파트 단지 위치</h3>
-          <p>랭킹의 아파트를 클릭하면 지도에서 위치를 확인할 수 있습니다.</p>
-          <div class="selected-apt-card" id="selectedAptCard" role="button" tabindex="0" aria-label="선택 단지 입지 분석 열기">
-            <span id="selectedAptRank">RANK 01</span>
-            <strong id="selectedAptName">엘시티 더샵</strong>
-            <small id="selectedAptMeta">중동 · 해운대해변로 30</small>
-            <b id="selectedAptValue">85.2억</b>
-          </div>
-          <div class="map-tip"><i></i> 랭킹의 아파트를 선택하면 Google 지도가 이동합니다</div>
-        </div>
-        <div class="ranking-map-canvas">
-          <div class="ranking-map-label"><span class="pulse"></span><b id="rankingMapLabel">해운대구 전체</b></div>
-          <iframe id="rankingGoogleMap" title="선택 아파트 Google 지도" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" src="https://www.google.com/maps?q=%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C%20%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC%20%ED%95%B4%EC%9A%B4%EB%8C%80%ED%95%B4%EB%B3%80%EB%A1%9C%2030%20%EC%97%98%EC%8B%9C%ED%8B%B0%20%EB%8D%94%EC%83%B5&amp;z=16&amp;output=embed"></iframe>
-          <div class="google-map-credit">Google 지도</div>
-          <a class="google-map-open" id="rankingMapOpen" href="https://www.google.com/maps/search/?api=1&amp;query=%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C%20%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC%20%ED%95%B4%EC%9A%B4%EB%8C%80%ED%95%B4%EB%B3%80%EB%A1%9C%2030%20%EC%97%98%EC%8B%9C%ED%8B%B0%20%EB%8D%94%EC%83%B5" target="_blank" rel="noopener noreferrer">Google 지도에서 크게 보기 ↗</a>
-        </div>
-      </article>
     </section>
 
     <section class="section-block pulse-section" id="pulse">
@@ -340,7 +320,7 @@
     <span>© 2026 Haeundae Market Compass</span>
   </footer>
   <div class="toast" id="toast" role="status"></div>
-  <script src="./app.js?v=20261028c"></script>
+  <script src="./app.js?v=20261028d"></script>
 </body>
 </html>
 

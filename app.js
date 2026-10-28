@@ -10,6 +10,7 @@ subway:{kicker:'METRO ACCESS',score:90,title:'2호선과 동해선, 촘촘한 �
 ktx:{kicker:'REGIONAL RAIL',score:71,title:'부산역·부전역과 연결되는 광역 이동망',description:'현재 KTX 이용은 부산역 중심이지만, 동해선과 도시철도를 통한 연계가 가능합니다. 부전역 복합환승센터 개발은 해운대권 광역 이동 편의를 높일 요인입니다.',metrics:[['부산역','약 45분','대중교통'],['부전역','약 28분','동해선'],['서울 이동','약 3시간','KTX 환승']],note:'KTX 직접 역세권은 아니지만 동해선 접근성이 좋은 센텀·재송권은 부전역 연계 효과를 기대할 수 있습니다.',map:'KTX 연계 이동시간',markers:[[205,130,'센텀역'],[245,198,'재송역'],[112,325,'부산역 방향']]},
 gtx:{kicker:'FUTURE MOBILITY',score:64,title:'부산형 급행철도, 미래 가치의 변수',description:'부산 도심형 급행철도와 차세대 광역교통망은 아직 계획·검토 단계가 포함돼 있습니다. 확정 노선과 개통 시점은 관계기관 발표를 지속적으로 확인해야 합니다.',metrics:[['계획 단계','검토·추진','노선별 상이'],['예상 수혜권','센텀권','환승 거점'],['확정 정보','공식 발표','확인 필요']],note:'미확정 교통 호재는 가격에 선반영될 수 있으므로, 노선 확정·예비타당성·착공 여부를 단계별로 구분해 판단해야 합니다.',map:'광역급행 계획 영향권',markers:[[310,235,'센텀 환승축'],[430,285,'해운대 생활권'],[145,165,'도심 연결축']]}}
 const dongProfiles={전체:{price:1,index:0,volume:1,population:375842},우동:{price:1.32,index:1.6,volume:1.25,population:54210},중동:{price:1.19,index:.9,volume:1.05,population:47280},좌동:{price:.9,index:.4,volume:1.1,population:58340},송정동:{price:.84,index:.3,volume:.55,population:11280},재송동:{price:.82,index:-.2,volume:1.15,population:61240},반여동:{price:.62,index:-.8,volume:1,population:64820},반송동:{price:.42,index:-1.1,volume:.6,population:43520},석대동:{price:.58,index:-.5,volume:.2,population:5152}};
+const momentumNames=['우동','중동','좌동','송정동','재송동','석대동','반여동','반송동'];
 const filterState={dong:'전체',date:'2026-10-22'};
 const selectedRank={group:'trade',type:'sale',index:0};
 const aptLocations={'엘시티 더샵':[518,290,'해운대해변로 30'],'마린시티자이':[367,272,'마린시티1로 9'],'해운대아이파크':[344,250,'마린시티2로 38'],'트럼프월드센텀Ⅰ':[296,204,'센텀동로 9'],'두산위브더제니스':[351,235,'마린시티2로 33'],'경동제이드':[389,278,'해운대해변로 197'],'대우월드마크센텀':[314,221,'센텀동로 25'],'롯데캐슬스타':[476,282,'중동2로 16'],'해운대경동리인뷰':[495,260,'달맞이길 30'],'센텀파크1차':[245,149,'센텀중앙로 142'],'해운대힐스테이트위브':[455,226,'좌동순환로 433']};
@@ -30,7 +31,54 @@ function setSelectedApartment(group,type,index,showAnalysis=false){selectedRank.
 function renderLocation(key){const d=locationData[key];document.querySelector('#locationKicker').textContent=d.kicker;document.querySelector('#locationScore').textContent=d.score;document.querySelector('#locationTitle').textContent=d.title;document.querySelector('#locationDescription').textContent=d.description;document.querySelector('#locationNote').textContent=d.note;document.querySelector('#mapLabel').textContent=d.map;document.querySelector('#locationMetrics').innerHTML=d.metrics.map(m=>`<div class="metric"><span>${m[0]}</span><strong>${m[1]}</strong><small>${m[2]}</small></div>`).join('');document.querySelector('#mapMarkers').innerHTML=d.markers.map(m=>`<g><circle class="marker-ring" cx="${m[0]}" cy="${m[1]}" r="24"/><circle class="marker-ring" cx="${m[0]}" cy="${m[1]}" r="14"/><circle class="marker-core" cx="${m[0]}" cy="${m[1]}" r="7"/><text class="marker-label" x="${m[0]+13}" y="${m[1]-10}">${m[2]}</text></g>`).join('')}
 function activeType(group){return document.querySelector(`[data-group="${group}"] .active`)?.dataset.type||'sale'}
 function dateLabels(){const end=new Date(`${filterState.date}T00:00:00`),labels=[];for(let i=6;i>=0;i--){const d=new Date(end.getFullYear(),end.getMonth()-i*2,1);labels.push(`${String(d.getFullYear()).slice(2)}.${String(d.getMonth()+1).padStart(2,'0')}`)}document.querySelector('.x-axis').innerHTML=labels.map(v=>`<span>${v}</span>`).join('')}
-function updateSummary(){const profile=dongProfiles[filterState.dong],f=priceFactor(),date=new Date(`${filterState.date}T00:00:00`),season=1+Math.sin((date.getMonth()+1)*.7)*.08,volume=Math.round(1284*profile.volume*season),sale=filteredMarket('sale'),volumeChange=-4.2+profile.index*.8+monthDelta()*.07;document.querySelector('#headerDate').textContent=filterState.date.replaceAll('-','.');document.querySelector('#analysisBasis').textContent=`해운대구 ${filterState.dong} · ${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일 · 최근 12개월`;document.querySelector('#avgSalePrice').textContent=formatPrice(84250*f);document.querySelector('#avgPyeongPrice').textContent=`${Math.round(3184*f).toLocaleString()}만`;document.querySelector('#recentVolume').textContent=`${volume.toLocaleString()}건`;document.querySelector('#avgSaleTrend').innerHTML=`↗ ${sale.year.replace('+','')} <i>전년 대비</i>`;document.querySelector('#avgPyeongTrend').innerHTML=`↗ ${Math.max(.2,parseFloat(sale.year)*.38).toFixed(1)}% <i>전년 대비</i>`;const vt=document.querySelector('#volumeTrend');vt.className=volumeChange>=0?'up':'down';vt.innerHTML=`${volumeChange>=0?'↗':'↘'} ${Math.abs(volumeChange).toFixed(1)}% <i>전월 대비</i>`;const pop=Math.round(profile.population*Math.max(.97,1+monthDelta()*.0006));document.querySelector('.population-value strong').textContent=pop.toLocaleString();const households=document.querySelectorAll('.population-foot b');if(households[0])households[0].textContent=Math.round(pop*.456).toLocaleString();const lastBar=document.querySelector('.volume-bars i:last-child');if(lastBar){lastBar.querySelector('em').textContent=volume.toLocaleString();lastBar.style.setProperty('--h',`${Math.min(94,38+volume/30)}%`)}dateLabels()}
+function setBriefTrend(id,value){const el=document.querySelector(id);el.textContent=value;el.className=parseFloat(value)<0?'down':'up'}
+function renderBriefing(sale,jeonse,profile,f){
+  const avgSale=84250*f,ratio=Math.max(48,Math.min(63,55+(1-profile.price)*3+monthDelta()*.05)),avgJeonse=avgSale*ratio/100,pir=Math.max(5.6,12.4*profile.price*(1+monthDelta()*.002));
+  document.querySelector('#briefingDate').textContent=filterState.date.replaceAll('-','.');
+  document.querySelector('#briefSaleIndex').textContent=sale.current;
+  document.querySelector('#briefJeonseIndex').textContent=jeonse.current;
+  document.querySelector('#briefAvgSale').textContent=formatPrice(avgSale);
+  document.querySelector('#briefAvgJeonse').textContent=formatPrice(avgJeonse);
+  document.querySelector('#briefJeonseRatio').textContent=`${ratio.toFixed(1)}%`;
+  document.querySelector('#briefPir').textContent=`${pir.toFixed(1)}배`;
+  setBriefTrend('#briefSaleChange',sale.month);
+  setBriefTrend('#briefJeonseChange',jeonse.month);
+  setBriefTrend('#briefAvgSaleChange',sale.year);
+  setBriefTrend('#briefAvgJeonseChange',jeonse.year);
+  document.querySelector('#briefRatioNote').textContent=`전월 대비 ${monthDelta()>=0?'+':''}${(.2+monthDelta()*.02).toFixed(1)}%p`;
+  document.querySelector('#briefPirNote').textContent=filterState.dong==='전체'?'해운대구 추정치':`${filterState.dong} 추정치`;
+}
+function renderMomentumOutlook(profile){
+  const day=Number(filterState.date.slice(-2)),shift=monthDelta()*.01+((day%5)-2)*.005;
+  const momentum=momentumNames.map(name=>({name,value:+Math.max(.03,.22+dongProfiles[name].index*.2+shift).toFixed(2)})).sort((a,b)=>b.value-a.value);
+  const max=momentum[0].value,root=document.querySelector('#dongMomentum');
+  root.innerHTML=momentum.slice(0,6).map((item,i)=>`<button class="momentum-row${filterState.dong===item.name?' selected':''}" data-dong="${item.name}" aria-label="${item.name} 월간 상승률 ${item.value}%로 조회"><span class="momentum-name">${item.name}<small>${i+1}위</small></span><span class="momentum-track"><i class="momentum-fill" style="--w:${24+item.value/max*76}%"></i></span><strong class="momentum-value">+${item.value.toFixed(2)}%</strong></button>`).join('');
+  root.querySelectorAll('.momentum-row').forEach(row=>row.addEventListener('click',()=>{document.querySelector('#dongSelect').value=row.dataset.dong;applyFilters()}));
+  const up=Math.max(18,Math.min(42,25.1+profile.index*2.1+monthDelta()*.12)),down=Math.max(8,Math.min(30,13.9-profile.index*1.1-monthDelta()*.05)),flat=100-up-down,index=100+(up-down)*.55+profile.index*.6,delta=.8+profile.index*.12+monthDelta()*.03,flatEnd=up+flat;
+  const donut=document.querySelector('#forecastDonut');donut.style.setProperty('--up',`${up.toFixed(1)}%`);donut.style.setProperty('--flat-end',`${flatEnd.toFixed(1)}%`);
+  document.querySelector('#outlookIndex').textContent=index.toFixed(1);
+  document.querySelector('#outlookDelta').textContent=`전월 대비 ${delta>=0?'+':''}${delta.toFixed(1)}p`;
+  document.querySelector('#forecastUp').textContent=`${up.toFixed(1)}%`;
+  document.querySelector('#forecastFlat').textContent=`${flat.toFixed(1)}%`;
+  document.querySelector('#forecastDown').textContent=`${down.toFixed(1)}%`;
+  document.querySelector('#outlookLabel').textContent=up>down+8?'상승 기대 우세':down>up?'하락 우려 우세':'보합 전망 우세';
+  document.querySelector('#outlookNote').textContent=filterState.dong==='전체'?'거래가격은 완만한 상승 기대가 우세하지만, 실제 거래량과 금리 흐름을 함께 확인하세요.':`${filterState.dong}은 해운대구 평균 대비 가격 모멘텀과 거래 강도를 함께 비교해 판단하는 것이 좋습니다.`;
+}
+function updateSummary(){
+  const profile=dongProfiles[filterState.dong],f=priceFactor(),date=new Date(`${filterState.date}T00:00:00`),season=1+Math.sin((date.getMonth()+1)*.7)*.08,volume=Math.round(1284*profile.volume*season),sale=filteredMarket('sale'),jeonse=filteredMarket('jeonse'),volumeChange=-4.2+profile.index*.8+monthDelta()*.07;
+  document.querySelector('#headerDate').textContent=filterState.date.replaceAll('-','.');
+  document.querySelector('#analysisBasis').textContent=`해운대구 ${filterState.dong} · ${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일 · 최근 12개월`;
+  document.querySelector('#avgSalePrice').textContent=formatPrice(84250*f);
+  document.querySelector('#avgPyeongPrice').textContent=`${Math.round(3184*f).toLocaleString()}만`;
+  document.querySelector('#recentVolume').textContent=`${volume.toLocaleString()}건`;
+  document.querySelector('#avgSaleTrend').innerHTML=`↗ ${sale.year.replace('+','')} <i>전년 대비</i>`;
+  document.querySelector('#avgPyeongTrend').innerHTML=`↗ ${Math.max(.2,parseFloat(sale.year)*.38).toFixed(1)}% <i>전년 대비</i>`;
+  const vt=document.querySelector('#volumeTrend');vt.className=volumeChange>=0?'up':'down';vt.innerHTML=`${volumeChange>=0?'↗':'↘'} ${Math.abs(volumeChange).toFixed(1)}% <i>전월 대비</i>`;
+  const pop=Math.round(profile.population*Math.max(.97,1+monthDelta()*.0006));document.querySelector('.population-value strong').textContent=pop.toLocaleString();
+  const households=document.querySelectorAll('.population-foot b');if(households[0])households[0].textContent=Math.round(pop*.456).toLocaleString();
+  const lastBar=document.querySelector('.volume-bars i:last-child');if(lastBar){lastBar.querySelector('em').textContent=volume.toLocaleString();lastBar.style.setProperty('--h',`${Math.min(94,38+volume/30)}%`)}
+  renderBriefing(sale,jeonse,profile,f);renderMomentumOutlook(profile);dateLabels();
+}
 function applyFilters(showToast=true){filterState.dong=document.querySelector('#dongSelect').value;filterState.date=document.querySelector('#dateSelect').value||'2026-10-22';updateSummary();renderChart(activeType('index'));renderRanking('trade',activeType('trade'));renderRanking('pyeong',activeType('pyeong'));setSelectedApartment('trade',activeType('trade'),0);if(showToast)toast(`해운대구 ${filterState.dong} · ${filterState.date} 기준으로 조회했습니다.`)}
 document.querySelector('#globalFilter').addEventListener('submit',e=>{e.preventDefault();applyFilters()});
 document.querySelector('#dongSelect').addEventListener('change',()=>applyFilters());

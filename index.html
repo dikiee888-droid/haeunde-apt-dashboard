@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
-  <link rel="stylesheet" href="./refinements.css?v=20261028b" />
+  <link rel="stylesheet" href="./refinements.css?v=20261028c" />
 </head>
 <body>
   <div class="ambient ambient-one"></div>
@@ -304,19 +304,32 @@
         <span id="aptAnalysisDate">2026.10.22 기준</span>
         <span>시연용 추정 데이터</span>
       </div>
-      <p class="apt-analysis-summary" id="aptAnalysisSummary"></p>
-      <div class="apt-analysis-metrics" id="aptAnalysisMetrics"></div>
-      <div class="apt-analysis-bottom">
-        <section>
-          <span>CORE STRENGTHS</span>
-          <h3>이 단지의 입지 강점</h3>
-          <ul id="aptAnalysisStrengths"></ul>
-        </section>
-        <section class="apt-caution">
-          <span>CHECK POINT</span>
-          <h3>함께 확인할 점</h3>
-          <p id="aptAnalysisCaution"></p>
-        </section>
+      <div class="apt-analysis-body">
+        <div class="apt-analysis-report">
+          <p class="apt-analysis-summary" id="aptAnalysisSummary"></p>
+          <div class="apt-analysis-metrics" id="aptAnalysisMetrics"></div>
+          <div class="apt-analysis-bottom">
+            <section>
+              <span>CORE STRENGTHS</span>
+              <h3>이 단지의 입지 강점</h3>
+              <ul id="aptAnalysisStrengths"></ul>
+            </section>
+            <section class="apt-caution">
+              <span>CHECK POINT</span>
+              <h3>함께 확인할 점</h3>
+              <p id="aptAnalysisCaution"></p>
+            </section>
+          </div>
+        </div>
+        <aside class="apt-analysis-map" aria-label="선택 단지 Google 지도">
+          <div class="apt-analysis-map-head">
+            <span>GOOGLE MAP · APARTMENT LOCATION</span>
+            <strong id="aptAnalysisMapName">엘시티 더샵 · 중동</strong>
+            <small id="aptAnalysisMapAddress">해운대해변로 30</small>
+          </div>
+          <iframe id="aptAnalysisGoogleMap" title="엘시티 더샵 Google 지도" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" src="https://www.google.com/maps?q=%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C%20%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC%20%ED%95%B4%EC%9A%B4%EB%8C%80%ED%95%B4%EB%B3%80%EB%A1%9C%2030%20%EC%97%98%EC%8B%9C%ED%8B%B0%20%EB%8D%94%EC%83%B5&amp;z=16&amp;output=embed"></iframe>
+          <a class="apt-analysis-map-open" id="aptAnalysisMapOpen" href="https://www.google.com/maps/search/?api=1&amp;query=%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C%20%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC%20%ED%95%B4%EC%9A%B4%EB%8C%80%ED%95%B4%EB%B3%80%EB%A1%9C%2030%20%EC%97%98%EC%8B%9C%ED%8B%B0%20%EB%8D%94%EC%83%B5" target="_blank" rel="noopener noreferrer">Google 지도에서 크게 보기 ↗</a>
+        </aside>
       </div>
     </div>
   </dialog>
@@ -327,7 +340,7 @@
     <span>© 2026 Haeundae Market Compass</span>
   </footer>
   <div class="toast" id="toast" role="status"></div>
-  <script src="./app.js?v=20261028b"></script>
+  <script src="./app.js?v=20261028c"></script>
 </body>
 </html>
 

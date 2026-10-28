@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
-  <link rel="stylesheet" href="./refinements.css?v=20261028d" />
+  <link rel="stylesheet" href="./refinements.css?v=20261028e" />
 </head>
 <body>
   <div class="ambient ambient-one"></div>
@@ -251,14 +251,16 @@
           <div class="insight-box"><span>ANALYST NOTE</span><p id="locationNote">좌동 신시가지와 센텀권은 학교·학원가 접근성이 함께 높아 자녀 교육 목적의 실수요가 꾸준한 지역입니다.</p></div>
         </article>
         <article class="map-card">
-          <div class="map-label"><span class="pulse"></span><b id="mapLabel">교육 인프라 밀집도</b></div>
-          <svg class="map-art" viewBox="0 0 680 460" role="img" aria-label="해운대구 입지 개념도">
+          <div class="map-label"><span class="pulse"></span><b id="mapLabel">교육 생활권 · 통학 접근성</b><small id="mapSubtitle">학교급·학원가·도보 통학 영향권</small></div>
+          <svg class="map-art" id="locationMapArt" viewBox="0 0 680 460" role="img" aria-label="해운대구 교육 생활권 개념 분석도">
             <path class="coast" d="M40 85C131 48 209 80 274 68c72-14 122-1 163 32 45 37 70 9 135 53 44 30 55 85 21 119-28 28-64 32-83 72-23 49-67 76-119 48-47-26-82 8-145 2-54-5-75-40-119-43-66-4-92-59-68-101 23-40-14-86-19-165z"/>
+            <g id="mapZones"></g>
             <g class="roads"><path d="M94 110c85 54 159 66 236 147s158 72 237 96"/><path d="M137 321c94-41 169-108 260-161s119-42 172-27"/><path d="M213 80c-4 85 12 169 68 250"/></g>
             <g id="mapMarkers"></g>
             <text x="74" y="250">반여동</text><text x="208" y="132">재송동</text><text x="302" y="242">우동</text><text x="431" y="320">중동</text><text x="516" y="216">좌동</text>
           </svg>
-          <div class="map-legend"><span><i class="hot"></i> 핵심권역</span><span><i class="mid"></i> 영향권</span><span><i class="low"></i> 생활권</span></div>
+          <div class="map-disclaimer" id="mapDisclaimer">개념 분석도 · 실제 학교 배정과 통학구역은 교육청 확인</div>
+          <div class="map-legend" id="mapLegend"><span><i class="school-primary">초</i> 초등 통학권</span><span><i class="school-secondary">중</i> 중·고교권</span><span><i class="school-academy">학</i> 학원가</span></div>
         </article>
       </div>
     </section>
@@ -320,7 +322,7 @@
     <span>© 2026 Haeundae Market Compass</span>
   </footer>
   <div class="toast" id="toast" role="status"></div>
-  <script src="./app.js?v=20261028d"></script>
+  <script src="./app.js?v=20261028e"></script>
 </body>
 </html>
 

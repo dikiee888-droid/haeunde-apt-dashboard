@@ -101,6 +101,21 @@
       </div>
     </section>
 
+    <section class="market-briefing panel" aria-label="해운대구 핵심 시장 브리핑">
+      <div class="briefing-head">
+        <div><span>MARKET BRIEFING</span><h2>한눈에 보는 해운대 시장</h2></div>
+        <p><b id="briefingDate">2026.10.22</b> 기준 · 선택 지역 실거래 기반 예시 지표</p>
+      </div>
+      <div class="briefing-grid">
+        <article class="briefing-item"><span>매매 가격지수</span><strong id="briefSaleIndex">108.4</strong><small class="up" id="briefSaleChange">+0.62%</small></article>
+        <article class="briefing-item"><span>전세 가격지수</span><strong id="briefJeonseIndex">105.7</strong><small class="up" id="briefJeonseChange">+0.38%</small></article>
+        <article class="briefing-item"><span>평균 매매가</span><strong id="briefAvgSale">8억 4,250만</strong><small class="up" id="briefAvgSaleChange">+4.18%</small></article>
+        <article class="briefing-item"><span>평균 전세가</span><strong id="briefAvgJeonse">4억 6,340만</strong><small class="up" id="briefAvgJeonseChange">+2.65%</small></article>
+        <article class="briefing-item"><span>전세가율</span><strong id="briefJeonseRatio">55.0%</strong><small id="briefRatioNote">전월 대비 +0.2%p</small></article>
+        <article class="briefing-item"><span>소득 대비 주택가격</span><strong id="briefPir">12.4배</strong><small id="briefPirNote">PIR 추정치</small></article>
+      </div>
+    </section>
+
     <section class="section-block">
       <div class="section-heading">
         <div><span class="section-no">01</span><h2>실거래가 가격지수</h2></div>
@@ -208,6 +223,29 @@
           <div class="population-value"><strong>375,842</strong><span>명</span><small>전년 대비 <b>−0.7%</b></small></div>
           <div class="sparkline"><svg viewBox="0 0 360 92" preserveAspectRatio="none"><defs><linearGradient id="popFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6b57" stop-opacity=".25"/><stop offset="1" stop-color="#ff6b57" stop-opacity="0"/></linearGradient></defs><path d="M0 18C35 21 54 31 83 35s55 2 78 13 42 9 63 16 49 2 75 12 38 8 61 10L360 92H0Z" fill="url(#popFade)"/><path d="M0 18C35 21 54 31 83 35s55 2 78 13 42 9 63 16 49 2 75 12 38 8 61 10" fill="none" stroke="#ff6b57" stroke-width="2.4"/></svg></div>
           <div class="population-foot"><span>가구 수 <b>171,206</b></span><span>1인 가구 <b>34.8%</b></span></div>
+        </article>
+      </div>
+      <div class="market-intelligence-grid">
+        <article class="panel momentum-panel">
+          <div class="micro-title"><span>NEIGHBORHOOD MOMENTUM</span><h3>동별 매매가격지수 상승률 TOP</h3><b>월간 변동률</b></div>
+          <p class="intel-description">해운대구 생활권별 가격 모멘텀을 비교합니다. 막대를 누르면 해당 동으로 필터가 변경됩니다.</p>
+          <div class="momentum-list" id="dongMomentum" aria-label="동별 매매가격지수 상승률 순위"></div>
+        </article>
+        <article class="panel outlook-panel">
+          <div class="micro-title"><span>PRICE OUTLOOK</span><h3>매매가격 전망</h3><b>월간 설문</b></div>
+          <div class="outlook-content">
+            <div class="forecast-donut" id="forecastDonut">
+              <div><strong id="outlookIndex">106.2</strong><span>가격전망지수</span><small id="outlookDelta">전월 대비 +0.8p</small></div>
+            </div>
+            <div class="forecast-legend">
+              <strong id="outlookLabel">상승 기대 우세</strong>
+              <p>중개업소·수요자 심리를 지수화한 예시 전망입니다.</p>
+              <span><i class="forecast-up"></i>상승 <b id="forecastUp">25.1%</b></span>
+              <span><i class="forecast-flat"></i>보합 <b id="forecastFlat">61.0%</b></span>
+              <span><i class="forecast-down"></i>하락 <b id="forecastDown">13.9%</b></span>
+            </div>
+          </div>
+          <div class="outlook-note"><span>READING</span><p id="outlookNote">거래가격은 완만한 상승 기대가 우세하지만, 실제 거래량과 금리 흐름을 함께 확인하세요.</p></div>
         </article>
       </div>
     </section>
